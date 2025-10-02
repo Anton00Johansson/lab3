@@ -1,58 +1,59 @@
 from math import sin,cos,radians
 import random
 
-#TODO: Deal with all TODOs in this file and also remove the TODO and HINT comments.
 
 """ This is the model of the game"""
 class Game:
     """ Create a game with a given size of cannon (length of sides) and projectiles (radius) """
     def __init__(self, cannonSize, ballSize):
-        # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
-        # HINT: This constructor needs to create two players according to the rules specified in the assignment text
-        pass 
+        self.cannonSize = cannonSize
+        self.ballSize = ballSize
+        self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
+
+        self.currentPlayer = 0
+        self.currentWind = random.random() * 20 - 10
 
     """ A list containing both players """
     def getPlayers(self):
-        return [] #TODO: this is just a dummy value
+        return self.players
 
     """ The height/width of the cannon """
     def getCannonSize(self):
-        return 0 #TODO: this is just a dummy value
+        return self.cannonSize
 
     """ The radius of cannon balls """
     def getBallSize(self):
-        return 0 #TODO: this is just a dummy value
+        return self.ballSize
 
     """ The current player, i.e. the player whose turn it is """
     def getCurrentPlayer(self):
-        return None #TODO: this is just a dummy value
+        return self.players[self.currentPlayer]
 
     """ The opponent of the current player """
     def getOtherPlayer(self):
-        return None #TODO: this is just a dummy value
+        return self.players[1 - self.currentPlayer]
     
     """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
-        return 0 #TODO: this is just a dummy value
+        return self.currentPlayer
     
     """ Switch active player """
     def nextPlayer(self):
-        pass #TODO: this should do something instead of nothing
+        self.currentPlayer = 1 - self.currentPlayer
+        return self.currentPlayer
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
-        pass #TODO: this should do something instead of nothing
+        self.currentWind = wind
+        return self.currentWind
 
-    
     def getCurrentWind(self):
-        return 0 #TODO: this is just a dummy value
+        return self.currentWind
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
-        #HINT: random.random() gives a random value between 0 and 1
-        # multiplying this by 20 gives a random value between 0 and 20
-        # how do you shift a value between 0 and 20 to one between -10 and +10?
-        pass #TODO: this should do something instead of nothing
+        self.currentWind = random.random() * 20 - 10
+        return self.currentWind
 
 """ Models a player """
 class Player:
