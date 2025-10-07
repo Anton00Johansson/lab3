@@ -93,7 +93,7 @@ class Player:
 
     def getX(self):
         """ The x-position of the centre of this players cannon """
-        return self.x_pos
+        return self.xPos
 
     """ The angle and velocity of the last projectile this player fired, initially (45, 40) """
     def getAim(self):
