@@ -10,7 +10,7 @@ class GameGraphics:
         self.win = GraphWin("Cannon game" , 640, 480, autoflush=False)
         self.win.setCoords(-110, -10, 110, 155)
         
-        line = Line(Point(-110,0),Point(110,0))
+        line = Line(Point(-110,0), Point(110,0))
         line.draw(self.win)
 
         self.draw_cannons = [self.drawCanon(0), self.drawCanon(1)]
@@ -25,7 +25,6 @@ class GameGraphics:
 
         cannon.setFill(self.game.getPlayers()[playerNr].getColor())
         cannon.draw(self.win)
-
         return cannon
 
     def drawScore(self,playerNr):
@@ -73,6 +72,20 @@ class GameGraphics:
         player = self.game.getPlayers()[playerNr]
         text = Text(Point(player.getX(), -5), f"Score: {player.getScore()}")
         text.draw(self.win)
+        self.draw_scores[playerNr] = text
+
+    def explode(self, winner_color, target_player):
+        cx = target_player.getX()
+        cy = self.game.getCannonSize()/2
+        r  = self.game.getBallSize()
+        rmax = 2*self.game.getCannonSize()
+        while r <= rmax:
+            c = Circle(Point(cx, cy), r)
+            c.setOutline(winner_color)
+            c.draw(self.win)
+            update(50)
+            c.undraw()
+            r += 1
 
     def play(self):
         while True:
@@ -83,10 +96,11 @@ class GameGraphics:
             # InputDialog(self, angle, vel, wind) is a class in gamegraphics
             inp = InputDialog(oldAngle,oldVel,wind)
             # interact(self) is a function inside InputDialog. It runs a loop until the user presses either the quit or fire button
-            if inp.interact() == "Fire!": 
+            action = inp.interact()
+            if action == "Fire!": 
                 angle, vel = inp.getValues()
                 inp.close()
-            elif inp.interact() == "Quit":
+            elif action == "Quit":
                 exit()
             
             player = self.game.getCurrentPlayer()
@@ -96,6 +110,7 @@ class GameGraphics:
 
             if distance == 0.0:
                 player.increaseScore()
+                self.explode(player.getColor(), other)
                 self.updateScore(self.game.getCurrentPlayerNumber())
                 self.game.newRound()
 
@@ -141,7 +156,6 @@ class InputDialog:
 
 
 class Button:
-
     def __init__(self, win, center, width, height, label):
 
         w,h = width/2.0, height/2.0

@@ -68,8 +68,8 @@ class Player:
         self.isReversed = isReversed
         self.xPos = xPos
         self.color = color
-        self.angle = 0
-        self.velocity = 0
+        self.angle = 45
+        self.velocity = 40
         self.score = 0
     
     def fire(self, angle, velocity):
