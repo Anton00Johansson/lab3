@@ -35,21 +35,22 @@ class GameGraphics:
 
     def fire(self, angle, vel):
         player = self.game.getCurrentPlayer()
-        proj = player.fire(angle, vel)
         playerNr = self.game.getCurrentPlayerNumber()
-
-        circle_X = proj.getX()
-        circle_Y = proj.getY()
 
         if self.draw_projs[playerNr] is not None:
             try:
                 self.draw_projs[playerNr].undraw()
             except:
                 pass
+        
+        proj = player.fire(angle, vel)
+        circle_X = proj.getX()
+        circle_Y = proj.getY()
 
         circle = Circle(Point(circle_X, circle_Y), self.game.getBallSize())
         circle.setFill(player.getColor())
         circle.draw(self.win)
+        self.draw_projs[playerNr] = circle
 
         while proj.isMoving():
             proj.update(1/50)
