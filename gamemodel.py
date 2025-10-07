@@ -92,17 +92,25 @@ class Player:
         return self.Projectile
 
     def projectileDistance(self, proj):
-        """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
-
-        # HINT: both self (a Player) and proj (a Projectile) have getX()-methods.
-        # HINT: This method should give a negative value if the projectile missed to the left and positive if it missed to the right.
-        # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
-        # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
-        self.proj = proj
+        """ 
+        Gives the x-distance from this players cannon to a projectile. 
+        If the cannon and the projectile touch (assuming the projectile is on the ground and 
+        factoring in both cannon and projectile size) this method should return 0
+        """
         
-        distance = 0
+        playerPosision = Player.getX(self)
+        projectilePosision = Projectile.getX(proj)
+        ballSizeCompensation = self.game.getBallSize()
+        cannonSizeCompensation = self.game.getCannonSize()
 
-        return distance
+        if projectilePosision >= (playerPosision -cannonSizeCompensation / 2) and projectilePosision <= (playerPosision + cannonSizeCompensation / 2):
+            self.distance = 0
+        elif projectilePosision > playerPosision:
+            self.distance = projectilePosision - playerPosision - (ballSizeCompensation + (cannonSizeCompensation) / 2)
+        elif projectilePosision < playerPosision:
+            self.distance = projectilePosision - playerPosision + ballSizeCompensation + (cannonSizeCompensation) / 2
+                
+        return self.distance
 
     def getScore(self):
         """ The current score of this player """
