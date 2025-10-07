@@ -41,10 +41,11 @@ class GameGraphics:
         circle_X = proj.getX()
         circle_Y = proj.getY()
 
-        try:
-            self.draw_projs[playerNr].undraw()
-        except Exception:
-            pass
+        if self.draw_projs[playerNr] is not None:
+            try:
+                self.draw_projs[playerNr].undraw()
+            except:
+                pass
 
         circle = Circle(Point(circle_X, circle_Y), self.game.getBallSize())
         circle.setFill(player.getColor())
@@ -60,7 +61,6 @@ class GameGraphics:
             circle_Y = proj.getY()
 
             update(50)
-
         return proj
 
     def updateScore(self,playerNr):
@@ -144,7 +144,12 @@ class InputDialog:
             if self.quit.clicked(pt):
                 return "Quit"
             if self.fire.clicked(pt):
-                return "Fire!"
+                try:
+                    float(self.angle.getText())
+                    float(self.vel.getText())
+                    return "Fire!"   
+                except ValueError:
+                    pass
 
     def getValues(self):
         a = float(self.angle.getText())
