@@ -82,16 +82,15 @@ class Player:
         self.velocity = velocity
 
         if self.isReversed:
-            self.Projectile = Projectile(
-                180 - self.angle, self.velocity, self.game.getCurrentWind(),
+            return Projectile(
+                180 - angle, velocity, self.game.getCurrentWind(),
                 self.xPos, self.game.getCannonSize()/2, -110, 110
             )
         else:
-            self.Projectile = Projectile(
-                self.angle, self.velocity, self.game.getCurrentWind(),
+            return Projectile(
+                angle, velocity, self.game.getCurrentWind(),
                 self.xPos, self.game.getCannonSize()/2, -110, 110
             )
-        return self.Projectile
 
     def projectileDistance(self, proj):
         """ 
@@ -106,13 +105,11 @@ class Player:
         cannonSizeCompensation = self.game.getCannonSize()
 
         if projectilePosision >= (playerPosision -cannonSizeCompensation / 2) and projectilePosision <= (playerPosision + cannonSizeCompensation / 2):
-            self.distance = 0
+            return 0
         elif projectilePosision > playerPosision:
-            self.distance = projectilePosision - playerPosision - (ballSizeCompensation + (cannonSizeCompensation) / 2)
+            return projectilePosision - playerPosision - (ballSizeCompensation + (cannonSizeCompensation) / 2)
         elif projectilePosision < playerPosision:
-            self.distance = projectilePosision - playerPosision + ballSizeCompensation + (cannonSizeCompensation) / 2
-                
-        return self.distance
+            return projectilePosision - playerPosision + ballSizeCompensation + (cannonSizeCompensation) / 2
 
     def getScore(self):
         """The current score of this player."""
