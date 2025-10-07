@@ -75,17 +75,17 @@ class GameGraphics:
         self.draw_scores[playerNr] = text
 
     def explode(self, winner_color, target_player):
-        cx = target_player.getX()
-        cy = self.game.getCannonSize()/2
-        r  = self.game.getBallSize()
-        rmax = 2*self.game.getCannonSize()
-        while r <= rmax:
-            c = Circle(Point(cx, cy), r)
-            c.setOutline(winner_color)
-            c.draw(self.win)
+        cannonX = target_player.getX()
+        cannonY = self.game.getCannonSize()/2
+        startR  = self.game.getBallSize()
+        maxR = 2 * self.game.getCannonSize()
+        while startR <= maxR:
+            explotionC = Circle(Point(cannonX, cannonY), startR)
+            explotionC.setOutline(winner_color)
+            explotionC.draw(self.win)
             update(50)
-            c.undraw()
-            r += 1
+            explotionC.undraw()
+            startR += 1
 
     def play(self):
         while True:
