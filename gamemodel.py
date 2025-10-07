@@ -99,17 +99,17 @@ class Player:
         factoring in both cannon and projectile size) this method should return 0
         """
         
-        playerPosision = Player.getX(self)
-        projectilePosision = Projectile.getX(proj)
-        ballSizeCompensation = self.game.getBallSize()
-        cannonSizeCompensation = self.game.getCannonSize()
+        playerPos = Player.getX(self)
+        projPos = Projectile.getX(proj)
+        distX = projPos - playerPos
+        distMin = self.game.getBallSize() + (self.game.getCannonSize() / 2)
 
-        if projectilePosision >= (playerPosision -cannonSizeCompensation / 2) and projectilePosision <= (playerPosision + cannonSizeCompensation / 2):
+        if abs(distX) <= distMin:
             return 0
-        elif projectilePosision > playerPosision:
-            return projectilePosision - playerPosision - (ballSizeCompensation + (cannonSizeCompensation) / 2)
-        elif projectilePosision < playerPosision:
-            return projectilePosision - playerPosision + ballSizeCompensation + (cannonSizeCompensation) / 2
+        elif distX > 0:
+            return distX - distMin
+        elif distX < 0:
+            return distX + distMin
 
     def getScore(self):
         """The current score of this player."""

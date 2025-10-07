@@ -42,8 +42,10 @@ class GameGraphics:
         circle_X = proj.getX()
         circle_Y = proj.getY()
 
-        if self.draw_projs[playerNr] is not None:
+        try:
             self.draw_projs[playerNr].undraw()
+        except Exception:
+            pass
 
         circle = Circle(Point(circle_X, circle_Y), self.game.getBallSize())
         circle.setFill(player.getColor())

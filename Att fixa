@@ -1,0 +1,35 @@
+🖼️ Fel eller saknade delar i graphicsmain.py
+
+fire()
+
+Nya projektilen måste sparas i self.draw_projs[playerNr] efter att den ritats, annars går inte gamla kulor att ta bort nästa gång spelaren skjuter.
+
+updateScore()
+
+Nya poängtexten måste sparas i self.draw_scores[playerNr], annars misslyckas nästa undraw av texten.
+
+play()
+
+inp.interact() kallas två gånger i rad. Det ska bara kallas en gång per tur, sedan ska man grena beroende på resultat (“Fire!” eller “Quit”).
+
+Explosion saknas
+
+Metoden explode() är inte implementerad.
+
+Den ska animera en cirkel som växer över den träffade kanonen och kallas efter att poängen ökas.
+
+(Mindre) Projektiler ligger kvar efter träff
+
+Enligt instruktionen bör gamla kulor tas bort (undraw) när ny runda börjar eller explosion sker.
+
+(Mindre) För tyst felhantering
+
+updateScore() använder try/except som döljer alla fel; bättre att kolla om objektet är None innan undraw().
+
+✅ Kortfattad checklista för att få full poäng
+Nr	Åtgärd	Fil
+3	Spara ny projektil i self.draw_projs[playerNr]	graphicsmain.py
+4	Spara ny score-text i self.draw_scores[playerNr]	graphicsmain.py
+5	Kalla inp.interact() endast en gång	graphicsmain.py
+6	Implementera och anropa explode()	graphicsmain.py
+7	(valfritt) Rensa gamla kulor vid ny runda	graphicsmain.py
