@@ -1,13 +1,9 @@
 # --- IMPORTS ---
-
-
 from math import sin, cos, radians
 import random
 
 
 # --- GAME MODEL ---
-
-
 class Game:
     """Create a game with a given size of cannon (length of sides) and projectiles (radius)."""
     def __init__(self, cannonSize, ballSize):
@@ -59,8 +55,6 @@ class Game:
 
 
 # --- PLAYER MODELS ---
-
-
 class Player:
     """Represents a player controlling a cannon in the game."""
     def __init__(self, game, isReversed, xPos, color):
@@ -133,8 +127,6 @@ class Player:
 
 
 # --- PROJECTILE MODELS ---
-
-
 class Projectile:
     """
         Constructor parameters:
