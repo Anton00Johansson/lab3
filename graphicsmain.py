@@ -15,7 +15,7 @@ class GameGraphics:
 
         self.draw_cannons = [self.drawCanon(0), self.drawCanon(1)]
         self.draw_scores  = [self.drawScore(0), self.drawScore(1)]
-        self.draw_projs   = [None, None]
+        self.draw_projs: list[Circle | None] = [None, None]
 
     def drawCanon(self,playerNr): 
         p1 = Point(self.game.getPlayers()[playerNr].getX() - self.game.getCannonSize() / 2, 0)
@@ -37,15 +37,12 @@ class GameGraphics:
         player = self.game.getCurrentPlayer()
         playerNr = self.game.getCurrentPlayerNumber()
 
-        if self.draw_projs[playerNr] is not None:
-            try:
-                self.draw_projs[playerNr].undraw()
-            except:
-                pass
-        
         proj = player.fire(angle, vel)
         circle_X = proj.getX()
         circle_Y = proj.getY()
+
+        if self.draw_projs[playerNr] is not None:
+                self.draw_projs[playerNr].undraw()
 
         circle = Circle(Point(circle_X, circle_Y), self.game.getBallSize())
         circle.setFill(player.getColor())
@@ -98,6 +95,8 @@ class GameGraphics:
             inp = InputDialog(oldAngle,oldVel,wind)
             # interact(self) is a function inside InputDialog. It runs a loop until the user presses either the quit or fire button
             action = inp.interact()
+            angle, vel = oldAngle, oldVel
+
             if action == "Fire!": 
                 angle, vel = inp.getValues()
                 inp.close()
